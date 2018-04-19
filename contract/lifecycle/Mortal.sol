@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-import "./Ownable.sol";
+import "../ownership/Ownable.sol";
 
 // allow contract to be destructible
 contract Mortal is Ownable {
