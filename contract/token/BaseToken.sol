@@ -56,7 +56,8 @@ contract BaseToken is Ownable, Pausable, Mortal{
   function transfer(address _to, uint256 _value) whenNotPaused public returns (bool success)  {
     require(_to != address(0));
     require(_value <= balances[msg.sender]);
-    require(isContract(_to) == false);
+    //REMOVED - SH 20180430 - WOULD PREVENT SENDING TO MULTISIG WALLET
+    //require(isContract(_to) == false);
     require(!frozenAccount[msg.sender]);
     balances[msg.sender] = balances[msg.sender].sub(_value);
     balances[_to] = balances[_to].add(_value);
@@ -64,14 +65,15 @@ contract BaseToken is Ownable, Pausable, Mortal{
     return true;
   }
 
+  //REMOVED - SH 20180430 - WOULD PREVENT SENDING TO MULTISIG WALLET
   //Check if to address is contract
-  function isContract(address _addr) private constant returns (bool) {
-        uint codeSize;
-        assembly {
-            codeSize := extcodesize(_addr)
-        }
-        return codeSize > 0;
-    }
+  //function isContract(address _addr) private constant returns (bool) {
+  //      uint codeSize;
+  //      assembly {
+  //          codeSize := extcodesize(_addr)
+  //      }
+  //      return codeSize > 0;
+  //  }
 
   function approve(address _spender, uint256 _value) public returns (bool success) {
     allowances[msg.sender][_spender] = _value;
